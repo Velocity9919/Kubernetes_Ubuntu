@@ -1,0 +1,94 @@
+                                                         =================== EKS-CLUSTER-CREATATION ========================
+
+
+=================== JAVA INSTALLATION ============================
+````
+sudo apt-get update
+sudo apt install openjdk-11-jre-headless
+````
+==================== Install and Setup Jenkins ======================
+````
+sudo vi /etc/sudoers
+````
+````
+jenkins ALL=(ALL) NOPASSWD: ALL
+````
+
+========================================== MAVEN INSTALLATION =============================
+
+========================================== DOCKER INSTALLATION ============================
+````
+sudo usermod -aG docker jenkins
+sudo chmod 666 /var/run/docker.sock
+````
+===========================================
+````
+sudo su - jenkins
+````
+
+==================Install or update the AWS CLI ===================
+````
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+sudo apt install unzip
+unzip awscliv2.zip
+sudo ./aws/install
+./aws/install -i /usr/local/aws-cli -b /usr/local/bin
+aws --version
+````
+
+====================  Install eksctl on Ubuntu Linux ==================
+````
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+eksctl version
+````
+
+===================== Installing or updating kubectl ====================
+````
+curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.27.1/2023-04-19/bin/linux/amd64/kubectl
+curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.27.1/2023-04-19/bin/linux/amd64/kubectl.sha256
+sha256sum -c kubectl.sha256
+openssl sha1 -sha256 kubectl
+chmod +x ./kubectl
+mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH
+echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
+kubectl version --short --client
+````
+=======================AWS Configure ====================================
+create IAM user with administration access
+````
+aws configure
+````
+AWS Access Key ID [None]: AKIATJQNTRM7NOULDJU6
+AWS Secret Access Key [None]: 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
+Default region name [None]: ap-south-1
+Default output format [None]: json
+
+====================== Cluster creation ==================================
+````
+eksctl create cluster --name naresh-test-cluster --region ap-south-1 --nodegroup-name my-nodes --node-type t3.small --managed --nodes 2
+````
+````
+eksctl get cluster --name naresh-test-cluster --region ap-south-1
+````
+````
+aws eks update-kubeconfig --name naresh-test-cluster --region ap-south-1
+````
+
+Added new context arn:aws:eks:ap-south-1:226588068670:cluster/demo-eks to (/root/.kube/config)--> copy the path
+(crete credencials with this config file)
+````
+cat /root/.kube/config 
+````
+````
+kubectl get nodes
+````
+````
+kubectl get deployments
+````
+````
+kubectl get service
+````
+````
+eksctl delete cluster --name naresh-test-cluster --region ap-south-1
+````
