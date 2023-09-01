@@ -1,12 +1,15 @@
 ------------------- EKS-CLUSTER-CREATATION ----------------------
 
 
-------------------- JAVA INSTALLATION ---------------------------
+------------------- Java Installation---------------------------
+
 ````
 sudo apt-get update
 sudo apt install openjdk-11-jre-headless
 ````
+
 -------------------- Install and Setup Jenkins -------------------
+
 ````
 sudo vi /etc/sudoers
 ````
@@ -14,9 +17,13 @@ sudo vi /etc/sudoers
 jenkins ALL=(ALL) NOPASSWD: ALL
 ````
 
----------------------- MAVEN INSTALLATION -------------------------
+---------------------- Maven Installation -------------------------
 
----------------------- DOCKER INSTALLATION -------------------------
+
+
+---------------------- Docker Installation -------------------------
+
+
 ````
 sudo usermod -aG docker jenkins
 sudo chmod 666 /var/run/docker.sock
