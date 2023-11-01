@@ -1,11 +1,11 @@
-====================================================================EKS-CLUSTER-CREATATION =========================================================
+-------------------------------------------------------- EKS-CLUSTER-CREATATION -----------------------------------------------------------
 
-=================== JAVA INSTALLATION ============================
+----------------------------------------- JAVA INSTALLATION -----------------------------------------
 ````
 sudo apt-get update
 sudo apt install openjdk-11-jre-headless
 ````
-==================== Install and Setup Jenkins ======================
+----------------------------------------- Install and Setup Jenkins -----------------------------------------
 ````
 curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
   /usr/share/keyrings/jenkins-keyring.asc > /dev/null
@@ -28,17 +28,17 @@ sudo vi /etc/sudoers
 jenkins ALL=(ALL) NOPASSWD: ALL
 ````
 
-========================================== MAVEN INSTALLATION =============================
-========================================== DOCKER INSTALLATION ============================
+----------------------------------------- MAVEN INSTALLATION -----------------------------------------
+----------------------------------------- DOCKER INSTALLATION -----------------------------------------
 ````
 sudo usermod -aG docker jenkins
 sudo chmod 666 /var/run/docker.sock
 ````
-===========================================
+-----------------------------------------
 ````
 sudo su - jenkins
 ````
-========================================== AWS CLI INSTALLATION ===============================
+----------------------------------------- AWS CLI INSTALLATION -----------------------------------------
 ````
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 sudo apt install unzip
@@ -48,14 +48,14 @@ sudo ./aws/install
 aws --version
 ````
 
-====================  Install eksctl on Ubuntu Linux ==================
+-----------------------------------------  Install eksctl on Ubuntu Linux -----------------------------------------
 ````
 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 sudo mv /tmp/eksctl /usr/local/bin
 eksctl version
 ````
 
-===================== Installing or updating kubectl ====================
+----------------------------------------- Installing or updating kubectl -----------------------------------------
 ````
 curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.27.1/2023-04-19/bin/linux/amd64/kubectl
 curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.27.1/2023-04-19/bin/linux/amd64/kubectl.sha256
@@ -66,18 +66,18 @@ mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$P
 echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
 kubectl version --short --client
 ````
-========================== HELM Installing =============================
+----------------------------------------- HELM Installing -----------------------------------------
 ````
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 sudo chmod 700 get_helm.sh
 sudo ./get_helm.sh
 helm version --client
 ````
-======================== Helm chart creation ============================
+----------------------------------------- Helm chart creation -----------------------------------------
 ````
 helm create mychart
 ````
-=======================AWS Configure ====================================
+----------------------------------------- AWS Configure -----------------------------------------
 create IAM user with administration access
 ````
 aws configure
@@ -87,14 +87,14 @@ AWS Secret Access Key [None]: E348UCTUuvJggiA+Y7ifvWPSzL70RGzHj4ohZKXg
 Default region name [None]: ap-south-1
 Default output format [None]: json
 
-====================== Cluster creation ==================================
+----------------------------------------- Cluster creation -----------------------------------------
 ````
 eksctl create cluster --name my-demo-eks --region ap-south-1 --nodegroup-name my-nodes --node-type t3.small --managed --nodes 2
 ````
 ````
 kubectl get nodes
 ````
-====================== create Namespace ==================================
+----------------------------------------- create Namespace -----------------------------------------
 ````
 kubectl create ns helm-deployment
 ````
