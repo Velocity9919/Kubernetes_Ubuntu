@@ -99,6 +99,17 @@ kubectl get deployments
 ````
 kubectl get service
 ````
+
+-------------------------------------------- create Namespace --------------------------------------------
+````
+kubectl create ns helm-deployment
+````
+````
+kubectl get ns
+````
+````
+helm ls -n helm-deployment
+````
 ````
 eksctl delete cluster --name naresh-test-cluster --region ap-south-1
 ````
