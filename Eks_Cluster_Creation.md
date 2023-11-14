@@ -99,35 +99,6 @@ kubectl get deployments
 ````
 kubectl get service
 ````
--------------------------------------------- HELM Installing --------------------------------------------
-````
-curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-sudo chmod 700 get_helm.sh
-sudo ./get_helm.sh
-helm version --client
-````
--------------------------------------------- Helm chart creation --------------------------------------------
-go to the vs code and create helm chart
-````
-helm create mychart
-````
-````
-tree mychart
-````
-go to the mychart/values.yaml --> repository: nareshbabu1991/spring-petclinic
-service:
-  type: ClusterIP --> LoadBalancer
-  port: 80 --> 8080
--------------------------------------------- create Namespace --------------------------------------------
-````
-kubectl create ns helm-deployment
-````
-````
-kubectl get ns
-````
-````
-helm ls -n helm-deployment
-````
 ````
 eksctl delete cluster --name naresh-test-cluster --region ap-south-1
 ````
