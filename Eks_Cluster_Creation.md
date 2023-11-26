@@ -4,12 +4,39 @@
 ------------------- Java Installation---------------------------
 
 ````
-sudo apt-get update
-sudo apt install openjdk-11-jre-headless
+sudo hostnamectl set-hostname Jenkins
+````
+````
+/bin/bash
+````
+````
+sudo apt-get update -y
+sudo apt-get install -y default-jdk
+java --version
 ````
 
 -------------------- Install and Setup Jenkins -------------------
-
+````
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
+  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+````
+````
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+````
+````
+sudo apt-get update
+sudo apt-get install jenkins
+````
+````
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+sudo systemctl status jenkins
+````
+````
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+````
 ````
 sudo vi /etc/sudoers
 ````
@@ -18,16 +45,77 @@ jenkins ALL=(ALL) NOPASSWD: ALL
 ````
 
 ---------------------- Maven Installation -------------------------
+````
+cd /opt/
+````
+````
+wget https://dlcdn.apache.org/maven/maven-3/3.9.4/binaries/apache-maven-3.9.4-bin.tar.gz
+````
+````
+tar -xvf apache-maven-3.9.4-bin.tar.gz
+````
+````
+mv apache-maven-3.9.4 maven
+````
+````
+rm apache-maven-3.9.4-bin.tar.gz
+````
+````
+sudo vi /etc/profile.d/mavenenv.sh
+````
+````
+export JAVA_HOME=/usr/lib/jvm/default-java
 
+export M2_HOME=/opt/maven
 
+export PATH=${M2_HOME}/bin:${PATH}
+````
+````
+sudo chmod +x /etc/profile.d/mavenenv.sh
+````
+````
+source /etc/profile.d/mavenenv.sh
+````
+````
+mvn --version
+````
 
 ---------------------- Docker Installation -------------------------
-
-
+````
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg
+````
+````
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+````
+````
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+````
+````
+sudo apt-get update
+````
+````
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+````
+````
+service docker restart
+````
 ````
 sudo usermod -aG docker jenkins
 sudo chmod 666 /var/run/docker.sock
 ````
+````
+sudo systemctl restart docker
+````
+````
+sudo systemctl status docker
+````
+
 
 ````
 sudo su - jenkins
